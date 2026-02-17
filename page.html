@@ -1,0 +1,158 @@
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Counter</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f7f6f3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  h1 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 1.5rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 320px;
+    padding: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #1a1a1a;
+    background: #fff;
+    border: 1.5px solid #e8e6e1;
+    border-radius: 12px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+
+  textarea::placeholder { color: #ccc; }
+  textarea:focus { border-color: #b5b0a8; }
+
+  .stats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .stat {
+    flex: 1;
+    background: #fff;
+    border: 1.5px solid #e8e6e1;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: border-color 0.2s;
+  }
+
+  .stat:hover { border-color: #c9c5bd; }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-top: 0.35rem;
+  }
+
+  .clear-btn {
+    display: block;
+    margin: 1rem auto 0;
+    background: none;
+    border: none;
+    font-size: 0.75rem;
+    color: #ccc;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    font-family: inherit;
+  }
+
+  .clear-btn:hover { color: #999; }
+</style>
+
+
+
+<div class="container">
+  <h1><font size="6" face="Montserrat" color="#210d59">Word Counter</font></h1>
+  <textarea id="input" placeholder="Paste or type your text here…" autofocus=""></textarea>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value" id="words"><font color="#250c6a">0</font></div>
+      <div class="stat-label"><font color="#250c6a">Words</font></div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="chars"><font color="#250c6a">0</font></div>
+      <div class="stat-label"><font color="#250c6a">Characters</font></div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="chars-no-space"><font color="#250c6a">0</font></div>
+      <div class="stat-label"><font color="#250c6a">No Spaces</font></div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="sentences"><font color="#250c6a">0</font></div>
+      <div class="stat-label"><font color="#250c6a">Sentences</font></div>
+    </div>
+  </div>
+  <button class="clear-btn" onclick="clearAll()">clear</button>
+</div>
+
+<script>
+  const input = document.getElementById('input');
+
+  function update() {
+    const text = input.value;
+    const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    const chars = text.length;
+    const charsNoSpace = text.replace(/\s/g, '').length;
+    const sentences = text.trim() === '' ? 0 : (text.match(/[^.!?]*[.!?]+/g) || []).length;
+
+    document.getElementById('words').textContent = words.toLocaleString();
+    document.getElementById('chars').textContent = chars.toLocaleString();
+    document.getElementById('chars-no-space').textContent = charsNoSpace.toLocaleString();
+    document.getElementById('sentences').textContent = sentences.toLocaleString();
+  }
+
+  function clearAll() {
+    input.value = '';
+    update();
+    input.focus();
+  }
+
+  input.addEventListener('input', update);
+</script>
+
+
